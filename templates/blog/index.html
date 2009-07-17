@@ -1,0 +1,36 @@
+{% extends "../base.html" %}
+
+{% block title %}{% if page_title %}{{ page_title }}{% else %}Index{% endif %}{% endblock %}
+
+{% block content %}
+    {% if page_description %}
+        <h2 class="page-description">{{ page_description }}</h2>
+    {% endif %}
+    {% if posts %}
+        {% for post in posts %}
+        <div class="post">
+            <div class="date">{{ post.pub_date|date:"F d Y" }}</div>
+            <div class="title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></div>
+            <div class="tags">Tags:{% for tag in post.tags %} <a href="/blog/tag/{{ tag }}">{{ tag }}</a>{% endfor %}</div>
+            {% ifnotequal post.excerpt None %}
+                <div class="excerpt">{{ post.excerpt_html }}</div>
+                <div class="readmore"><a href="{{ post.get_absolute_url }}">Read more</a></div>
+            {% else %}
+                <div class="body">{{ post.body_html }}</div>
+            {% endifnotequal %}
+        </div>
+        {% endfor %}
+    {% else %}
+        <h2>No Posts Found</h2>
+    {% endif %}
+    {% if prev_offset or next_offset %}
+        <div class="span-16 last append-bottom">
+            {% if prev_offset %}
+            <a href="?offset={{ prev_offset }}">Previous Posts</a>
+            {% endif %}
+            {% if next_offset %}
+            <a href="?offset={{ next_offset }}">More Posts</a>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock %}

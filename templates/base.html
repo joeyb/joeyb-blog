@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>{% block title %}{% endblock %} | {{ settings.title }}</title>
+    <link rel="stylesheet" href="/static/css/blueprint/screen.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="/static/css/blueprint/print.css" type="text/css" media="print">    
+    <!--[if lt IE 8]><link rel="stylesheet" href="/static/css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css" media="screen, projection">
+    <link href="/blog/rss2" type="application/rss+xml" rel="alternate" title="{{ settings.title }} RSS Feed" />
+</head>
+<body>
+    <div class="container">
+        <div id="header" class="span-24 last">
+            <a href="/" class="logo" title="JoeyB.org">{{ settings.title }}</a>
+        </div>
+        <div id="content" class="span-16">
+            {% block content %}{% endblock %}
+        </div>
+        <div id="sidebar" class="span-8 last">
+            {% if archive_list %}
+            <div id="archive-list">
+                <h3>Archives</h3>
+                <ul>
+                    {% for month in archive_list reversed %}
+                    <li><a href="{{ month.url }}">{{ month.date|date:"F Y" }}</a> ({{ month.count }})</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            {% if tag_list %}
+            <div id="tag-list">
+                <h3>Tags</h3>
+                <ul>
+                    {% for tag in tag_list %}
+                    <li><a href="{{ tag.url }}">{{ tag.tag }}</a> ({{ tag.count }})</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+        <div id="footer" class="span-24 last">
+            &copy; Joey Bratton 2009 | <a href="/" title="Home">Home</a>
+        </div>
+    </div>
+    {% if settings.google_analytics %}
+        <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+        <script type="text/javascript">
+            try{
+                var pageTracker = _gat._getTracker("{{ settings.google_analytics }}");
+                pageTracker._trackPageview();
+            } catch(err) {}
+        </script>
+    {% endif %}
+</body>
+</html>

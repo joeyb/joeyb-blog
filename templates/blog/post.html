@@ -1,0 +1,22 @@
+{% extends "../base.html" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+    <div class="post">
+        <div class="date">{{ post.pub_date|date:"F d Y" }}</div>
+        {% if user_is_admin %}
+            <div class="admin">
+                <a href="{{ post.get_edit_url }}">edit post</a>
+            </div>
+        {% endif %}
+        <div class="title">{{ post.title }}</div>
+        <div class="tags">Tags:{% for tag in post.tags %} <a href="/blog/tag/{{ tag }}">{{ tag }}</a>{% endfor %}</div>
+        <div class="body">{{ post.body_html }}</div>
+    </div>
+    {% if settings.disqus %}
+        <div id="disqus_thread"></div>
+        <script type="text/javascript" src="http://disqus.com/forums/{{ settings.disqus }}/embed.js"></script>
+        <noscript><a href="http://{{ settings.disqus }}.disqus.com/?url=ref">View the discussion thread.</a></noscript>
+    {% endif %}
+{% endblock %}
