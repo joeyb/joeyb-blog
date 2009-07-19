@@ -11,7 +11,7 @@
 <body>
     <div class="container">
         <div id="header" class="span-24 last">
-            <a href="/" class="logo" title="JoeyB.org">{{ settings.title }}</a>
+            <a href="/" class="logo">{{ settings.title }}</a>
         </div>
         <div id="content" class="span-16">
             {% block content %}{% endblock %}
@@ -39,7 +39,7 @@
             {% endif %}
         </div>
         <div id="footer" class="span-24 last">
-            &copy; Joey Bratton 2009 | <a href="/" title="Home">Home</a>
+            &copy; {{ settings.author }} 2009 | <a href="/" title="Home">Home</a>
         </div>
     </div>
     {% if settings.google_analytics %}
