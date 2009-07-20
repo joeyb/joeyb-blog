@@ -10,18 +10,6 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
-# Used 27 times in query history.
-- kind: BlogPost
-  properties:
-  - name: slug
-  - name: pub_date
-
-# Used 8 times in query history.
-- kind: Entry
-  properties:
-  - name: slug
-  - name: pub_date
-
 # Used 26 times in query history.
 - kind: Post
   properties:
