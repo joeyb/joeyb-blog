@@ -64,7 +64,7 @@ class EditPostHandler(webapp.RequestHandler):
             page = view.Page()
             page.render_error(self, 404)
         else:
-            action_url = "/admin/post/edit%s" % post.get_absolute_url()
+            action_url = post.get_edit_url()
 
             template_values = {
                 'action': action_url,
@@ -96,7 +96,7 @@ class EditPostHandler(webapp.RequestHandler):
             page = view.Page()
             page.render_error(self, 404)
         else:
-            action_url = "/admin/post/edit%s" % post.get_absolute_url()
+            action_url = post.get_edit_url()
             post.title = self.request.get('title')
             post.body = self.request.get('body')
 

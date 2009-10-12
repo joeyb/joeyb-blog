@@ -73,11 +73,11 @@ class Post(db.Model):
         query.filter('pub_date < ', end_date)
         query.filter('slug = ', self.slug)
 
-        # Get the number of slug matches
-        count = query.count(1)
+        # Get the Post Key that match the given query (if it exists)
+        post = query.get()
 
         # If any slug matches were found then an exception should be raised
-        if count == 1:
+        if post and (not self.is_saved() or self.key() != post):
             raise SlugConstraintViolation(start_date, self.slug)
 
     def populate_html_fields(self):
@@ -85,9 +85,9 @@ class Post(db.Model):
         md = markdown.Markdown(extensions=['codehilite'])
 
         # Convert the excerpt and body Markdown into html
-        if self.excerpt_html == None and self.excerpt != None:
+        if self.excerpt != None:
             self.excerpt_html = md.convert(self.excerpt)
-        if self.body_html == None and self.body != None:
+        if self.body != None:
             self.body_html = md.convert(self.body)
 
 class SlugConstraintViolation(Exception):
